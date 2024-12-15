@@ -260,61 +260,97 @@ void ShowMenu(){
     unsigned short defaultColor = 7; // White
     unsigned short greenColor = 10; // Green
 
-    printf("%s", "The server can generate a random password.\nThe options are:\n");
+    printf("Password Generator Help Menu\nCommands:\n");
 
-    printf("1. '");
     SetColor(greenColor);
-    printf("n");
+    printf("h        ");
     SetColor(defaultColor);
-    printf("' for ");
+    printf(": show this ");
+    SetColor(greenColor);
+    printf("help menu");
+    SetColor(defaultColor);
+    printf(" (shows available commands)\n");
+
+    SetColor(greenColor);
+    printf("n LENGTH ");
+    SetColor(defaultColor);
+    printf(": generate ");
     SetColor(greenColor);
     printf("numeric password");
     SetColor(defaultColor);
-    printf(" (numbers only)\n");
+    printf(" (digits only)\n");
 
-    printf("2. '");
     SetColor(greenColor);
-    printf("a");
+    printf("a LENGTH ");
     SetColor(defaultColor);
-    printf("' for ");
+    printf(": generate ");
     SetColor(greenColor);
     printf("alphabetic password");
     SetColor(defaultColor);
-    printf(" (lowercase letters only)\n");
+    printf(" (lowercase letters)\n");
 
-    printf("3. '");
     SetColor(greenColor);
-    printf("m");
+    printf("m LENGTH ");
     SetColor(defaultColor);
-    printf("' for ");
+    printf(": generate ");
     SetColor(greenColor);
     printf("mixed password");
     SetColor(defaultColor);
     printf(" (lowercase letters and numbers)\n");
 
-    printf("4. '");
     SetColor(greenColor);
-    printf("s");
+    printf("s LENGTH ");
     SetColor(defaultColor);
-    printf("' for ");
+    printf(": generate ");
     SetColor(greenColor);
-    printf("strong password");
+    printf("secure password");
     SetColor(defaultColor);
-    printf(" (uppercase, lowercase letters, numbers and symbols)\n");
+    printf(" (uppercase, lowercase letters, numbers, symbols)\n");
 
-    printf("If you want to close the connection, please enter only '");
-        SetColor(greenColor);
-        printf("q");
-        SetColor(defaultColor);
-        printf("' character\n");
+    SetColor(greenColor);
+    printf("u LENGTH ");
+    SetColor(defaultColor);
+    printf(": generate ");
+    SetColor(greenColor);
+    printf("unambiguous secure password");
+    SetColor(defaultColor);
+    printf(" (no similar-looking characters)\n");
 
-        printf("Enter the character associated with the type of password you want to generate\n"
-               "followed by a space and the desired length (from ");
-        SetColor(greenColor);
-        printf("6 to 32");
-        SetColor(defaultColor);
-        printf(")\nThe server will send back the result -> ");
+    SetColor(greenColor);
+    printf("q        ");
+    SetColor(defaultColor);
+    printf(": ");
+    SetColor(greenColor);
+    printf("quit");
+    SetColor(defaultColor);
+    printf("  application\n");
+
+    printf("\n");
+    SetColor(greenColor);
+	printf("LENGTH ");
+	SetColor(defaultColor);
+    printf("must be between ");
+    SetColor(greenColor);
+    printf("6");
+    SetColor(defaultColor);
+    printf(" and ");
+    SetColor(greenColor);
+	printf("32");
+	SetColor(defaultColor);
+	printf(" characters\n\n");
+
+    printf("Ambiguous characters excluded in the '");
+    SetColor(greenColor);
+    printf("u");
+    SetColor(defaultColor);
+    printf("' option:\n");
+    printf("0 O o (zero and letters O)\n");
+    printf("1 l I i (one and letters l, I)\n");
+    printf("2 Z z (two and letter Z)\n");
+    printf("5 S s (five and letter S)\n");
+    printf("8 B (eight and letter B)\n");
 }
+
 
 void SetColor(unsigned short color){
 	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
