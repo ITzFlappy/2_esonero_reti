@@ -10,8 +10,6 @@
 
 #include <time.h>
 
-#define QLEN 5               // Queue length for incoming connections
-
 char * type_switcher(char *, char *, char *);
 void ShowOnline(int current_clients);
 void handle_client(void *arg);
@@ -24,6 +22,5 @@ char* generate_mixed(int length);
 char* generate_secure(int length);
 
 int current_clients = 0;
-int justonce = 1;
 
 #endif /* GENERATOR_H_ */

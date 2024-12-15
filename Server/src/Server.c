@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
     // Set socket to listen for incoming connections
     int listening;
-    listening = listen(server_socket, QLEN-1);
+    listening = listen(server_socket, 99);
     if (listening < NO_ERROR)
     {
         errorhandler("Listening failed\n");
@@ -103,14 +103,6 @@ int main(int argc, char *argv[])
 
     while (1) {
 
-    	if (current_clients == QLEN && justonce) {
-    		justonce = 0;
-			printf("Max number of clients connected, refusing new connections.\n");
-
-			Sleep(1000); // Pause to avoid CPU overload
-			continue;
-		}
-
         client_len = sizeof(client_address);
         client_socket = accept(server_socket, (struct sockaddr *)&client_address, &client_len);
         if (client_socket < 0) {
@@ -121,39 +113,19 @@ int main(int argc, char *argv[])
         // Increase the counter of connected clients
 		current_clients++;
 
-		if(current_clients < QLEN + 1){
-			SetColor(10);
-			printf("\t*New connection from ");
 
-			SetColor(1);
-			printf("%s:%d", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
+		SetColor(10);
+		printf("\t*New connection from ");
 
-			SetColor(10);
-			printf("*\n");
-			SetColor(7);
-		}
+		SetColor(1);
+		printf("%s:%d", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
 
+		SetColor(10);
+		printf("*\n");
+		SetColor(7);
 
-		if (current_clients > QLEN) {
-			SetColor(1);
-			printf("%s:%d", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
-			SetColor(7);
-			printf(" tried to connect, ");
-			SetColor(4);
-			printf("connection refused.\n");
-			SetColor(7);
-
-			// Send a message to the client that is refusing
-			    const char *full_message = "server is full";
-			    send(client_socket, full_message, strlen(full_message), 0);
-
-			closesocket(client_socket);  // Close the rejected connection
-			current_clients--;  // Decrement the counter for rejected clients
-			continue;
-		} else{
-			const char *full_message = "server is ready";
-			send(client_socket, full_message, strlen(full_message), 0);
-		}
+		const char *full_message = "server is ready";
+		send(client_socket, full_message, strlen(full_message), 0);
 
         // Dynamic client_socket allocation
         int *client_socket_ptr = malloc(sizeof(int));
@@ -306,7 +278,6 @@ void handle_client(void *arg) {
 
         			ShowOnline(current_clients);
 
-        			justonce = 1;
             break;
         } else if (bytes_received < 0) {
             printf("The client closed unexpectedly.\n");
@@ -365,7 +336,6 @@ void handle_client(void *arg) {
 
 			ShowOnline(current_clients);
 
-			justonce = 1;
 }
 
 void SetColor(unsigned short color){
@@ -376,9 +346,8 @@ void SetColor(unsigned short color){
 void ShowOnline(int current_clients){
 	printf("\t\t\t\tClient currently online: ");
 	SetColor(10);
-	printf("%d", current_clients);
+	printf("%d\n", current_clients);
 	SetColor(7);
-	printf("/5\n");
 }
 
 //Initializes the random number generator once

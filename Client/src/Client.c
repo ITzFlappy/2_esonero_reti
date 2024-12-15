@@ -77,26 +77,9 @@ int main(){
 	memset(server_string, 0, BUFFERSIZE);
 	bytes_received = recv(client_socket, server_string, BUFFERSIZE - 1, 0);
 
-	// Check if the server responded with "server is full"
+
 	if (bytes_received > 0) {
 	            server_string[bytes_received] = '\0'; // Check the string is terminated
-	            if (strcmp(server_string, "server is full") == 0) {
-	            	SetColor(10);
-	            	printf( " ____  _____ ____  _     _____ ____    _  ____    _____ _     _     _    \n"
-							"/ ___\\/  __//  __\\/ \\ |\\/  __//  __\\  / \\/ ___\\  /    // \\ /\\/ \\   / \\   \n"
-							"|    \\|  \\  |  \\/|| | //|  \\  |  \\/|  | ||    \\  |  __\\| | ||| |   | |   \n"
-							"\\___ ||  /_ |    /| \\// |  /_ |    /  | |\\___ |  | |   | \\_/|| |_/\\| |_/\\\n"
-							"\\____/\\____\\|_/\\_\\\\__/  \\____\\\\_/\\_\\  \\_/\\____/  \\_/   \\____/\\____/\\____/\n");
-
-	            	SetColor(7);
-
-	                printf("Try again later, Disconnecting...\n");
-	                closesocket(client_socket);
-	                Sleep(4000); // Wait 4 seconds before trying again
-	                return 0;
-	            } /*else if (strcmp(server_string, "server is ready") == 0){
-	            	// nothing
-	            }*/
 	        } else if (bytes_received <= 0) {
 	            errorhandler("Retrieve failed or connection closed prematurely\n");
 	            closesocket(client_socket);
