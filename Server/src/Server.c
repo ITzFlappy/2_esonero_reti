@@ -145,6 +145,9 @@ char * type_switcher(char *type, char *length, char *token_num) {
 
     // Generate password based on type character
     switch (type[0]) {
+    	case 'h':
+
+                break;
         case 'n':
             pw_result = generate_numeric(number);
             break;
@@ -157,6 +160,9 @@ char * type_switcher(char *type, char *length, char *token_num) {
         case 's':
             pw_result = generate_secure(number);
             break;
+        case 'u':
+			pw_result = generate_unambiguous(number);
+			break;
         default:
             printf("Invalid type \n");
             return NULL;
@@ -220,13 +226,6 @@ void SetColor(unsigned short color) {
     SetConsoleTextAttribute(hCon, color);
 }
 
-void ShowOnline(int current_clients) {
-    printf("\t\t\t\tClient currently online: ");
-    SetColor(10);
-    printf("%d\n", current_clients);
-    SetColor(7);
-}
-
 // Initializes the random number generator once
 void initialize_random() {
     static int initialized = 0;
@@ -271,6 +270,11 @@ char* generate_mixed(int length) {
 // Generates a secure password with special characters
 char* generate_secure(int length) {
     return generate_custom(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:,.<>?", 86);
+}
+
+// Generates an unambiguous password
+char* generate_unambiguous(int length) {
+    return generate_custom(length, "2346789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ!@#$%^&*()-_=+[]{}|;:,.<>?", 78);
 }
 
 

@@ -20,6 +20,7 @@ char* generate_numeric(int length);
 char* generate_alpha(int length);
 char* generate_mixed(int length);
 char* generate_secure(int length);
+char* generate_unambiguous(int length);
 
 int current_clients = 0;
 

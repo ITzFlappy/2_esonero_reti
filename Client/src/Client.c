@@ -75,6 +75,13 @@ int main() {
         strcpy(input_string_cpy, input_string);
         tokenizer(string_tokens, input_string_cpy); // Tokenize the input
 
+        // Check if the input is h for the menu
+		if (strcmp(string_tokens[0], "h") == 0) {
+
+			system("CLS");
+			continue; // Ask for input again
+		}
+
         // Check if the input is valid
         if (strcmp(string_tokens[0], "e") == 0) {
             printf("Invalid input. Please enter a valid character and length.\n");
@@ -192,7 +199,7 @@ void tokenizer(char *tokens[3], char *string) {
 
 // Checks if the first character of input is a valid option for password type
 int checkChar(char *string) {
-    if (string[0] == 'n' || string[0] == 'a' || string[0] == 'm' || string[0] == 's') {
+    if (string[0] == 'h' ||string[0] == 'n' || string[0] == 'a' || string[0] == 'm' || string[0] == 's'|| string[0] == 'u') {
         return 1;
     }
     return 0;
