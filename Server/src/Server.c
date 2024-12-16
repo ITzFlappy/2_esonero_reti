@@ -90,11 +90,13 @@ int main(int argc, char *argv[])
         // Null-terminate the received data
         client_data[bytes_received] = '\0';
 
-        printf("\nData received from client ");
+        printf("New request from ");
         SetColor(1);
-        printf("%s:%d", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
+        printf("%s:%d\n", inet_ntoa(client_address.sin_addr), ntohs(client_address.sin_port));
         SetColor(7);
-        printf(" : %s\n", client_data);
+
+        printf("\nData received from client : %s\n", client_data);
+
 
         // Process the received data
         char *string_tokens[3];
