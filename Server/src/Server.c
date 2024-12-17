@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : Server_UDP.c
+ Name        : Server.c
  Author      : Barbaro Gerardo
  Version     :
  Copyright   : Your copyright notice
@@ -9,8 +9,6 @@
  */
 #include "../../headers.h"
 #include "generator.h"
-
-#include <ws2tcpip.h>
 
 int main(int argc, char *argv[])
 {

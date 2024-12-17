@@ -1,7 +1,6 @@
 /*
  ============================================================================
-
- Name        : Client_UDP.c
+ Name        : Client.c
  Author      : Barbaro Gerardo
  Version     :
  Copyright   : Your copyright notice
