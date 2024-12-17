@@ -37,13 +37,27 @@ int main() {
     printf("%s", "Socket created successfully\n");
 
     // Setting up the server address structure
-    char *address_to_connect = "127.0.0.1";
+    char *address_to_connect = "passwdgen.uniba.it";
     int port = PROTOPORT;
+    struct addrinfo hints, *res;
+
+    memset(&hints, 0, sizeof(hints)); // Clear structure memory
+	hints.ai_family = AF_INET; // Use IPv4
+	hints.ai_socktype = SOCK_DGRAM; // UDP
+
+	// Resolve the server address
+	if (getaddrinfo(address_to_connect, NULL, &hints, &res) != 0) {
+		errorhandler("getaddrinfo failed\n");
+		closesocket(client_socket);
+		clearwinsock();
+		return -1;
+	}
+
     struct sockaddr_in server_ad;
-    memset(&server_ad, 0, sizeof(server_ad)); // Clear structure memory
-    server_ad.sin_family = AF_INET;
-    server_ad.sin_addr.s_addr = inet_addr(address_to_connect);
-    server_ad.sin_port = htons(port);
+    memcpy(&server_ad, res->ai_addr, res->ai_addrlen); // Copy resolved address
+	freeaddrinfo(res); // Free the addrinfo structure
+
+	server_ad.sin_port = htons(port); // Set the port
 
     printf("%s ", "Trying to send data to");
     SetColor(1);

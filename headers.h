@@ -10,6 +10,7 @@
 
 #if defined WIN32
 	#include <winsock2.h>
+	#include <ws2tcpip.h>
 	#include <Windows.h>
 #else
 	#define closesocket close

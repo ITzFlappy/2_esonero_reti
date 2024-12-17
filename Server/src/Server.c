@@ -10,17 +10,18 @@
 #include "../../headers.h"
 #include "generator.h"
 
+#include <ws2tcpip.h>
+
 int main(int argc, char *argv[])
 {
     int port;
-    char *start_address_server = "";
+    char *start_address_server = "passwdgen.uniba.it";
     // Check command line arguments for server address and port
     if (argc > 1) {
         start_address_server = argv[1];
         port = atoi(argv[2]);
     } else {
         port = PROTOPORT;
-        start_address_server = SERVER_ADDRESS;
         if (port < 0) {
             printf("%d is a bad port number\n", port);
             return 0;
@@ -54,12 +55,28 @@ int main(int argc, char *argv[])
     }
     printf("%s", "Socket created successfully\n");
 
+    // Resolve the hostname to an IP address
+	struct addrinfo hints, *res;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_INET; // Use IPv4
+	hints.ai_socktype = SOCK_DGRAM; // UDP
+
+    if (getaddrinfo(start_address_server, NULL, &hints, &res) != 0) {
+            errorhandler("getaddrinfo failed\n");
+            closesocket(server_socket);
+            clearwinsock();
+            return -1;
+	}
+
     // Set up server address structure
     struct sockaddr_in server_address;
     memset(&server_address, 0, sizeof(server_address));
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = inet_addr(start_address_server);
+    server_address.sin_addr = ((struct sockaddr_in *)res->ai_addr)->sin_addr; // Use resolved address
     server_address.sin_port = htons(port);
+
+    // Free the address info after use
+	freeaddrinfo(res);
 
     // Bind socket to the specified port and address
     int server_bind;
